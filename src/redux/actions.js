@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE } from "./types";
+import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY } from "./types";
 
 import clienteAxios from "../config/axios";
 
@@ -97,4 +97,15 @@ export function filterByGenresAction(gamesfilter) {
 const filterByGenres = (gamesfilter) => ({
     type: FILTER_BY_GENRE,
     payload: gamesfilter
+})
+
+export function orderByAction(games) {
+    return async (dispatch) => {
+       await dispatch(orderBy(games))
+    }
+}
+
+const orderBy = (games) => ({
+    type: ORDER_BY,
+    payload: games
 })

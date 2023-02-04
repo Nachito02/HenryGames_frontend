@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME,GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR,FILTER_BY_GENRE } from "./types"
+import { GET_GAMES, GET_GAME, ADD_GAME,GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR,FILTER_BY_GENRE, ORDER_BY } from "./types"
 
 const initalState = {
     games: [],
@@ -41,11 +41,17 @@ const rootReducer = (state = initalState, action) => {
                             ...state, genres: action.payload 
                         } 
 
+                       
                         case FILTER_BY_GENRE : 
                         return {
                             ...state, filteredGames:action.payload,
                            
                         }
+
+                        case ORDER_BY:
+                            return {
+                                ...state, games:action.payload
+                            }
 
         default:
             return {

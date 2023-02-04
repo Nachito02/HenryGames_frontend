@@ -5,13 +5,12 @@ import GameCard from '../GameCard/GameCard';
 import styles from './Games.module.css'
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
-import { getGenresAction,filterByGenresAction } from "../../redux/actions";
+import { getGenresAction,filterByGenresAction,orderByAction } from "../../redux/actions";
 
 const Games = () => {
   const dispatch = useDispatch()
 
-
-
+    const [gameState, setGameState] = useState([])
 
   useEffect(() => {
     //consultar api
@@ -19,26 +18,41 @@ const Games = () => {
     loadGames()
    },[dispatch])
 
-
-   
-  useEffect(() => {
-    const getGenre = () => dispatch(getGenresAction())
-
-    getGenre()
-
-  },[dispatch])
-
    const games = useSelector(state => state.games)
    const genres = useSelector(state => state.genres)
    const filteredGames = useSelector((state) => state.filteredGames);
 
-   const handeChange = async (event) => { 
 
+
+   useEffect(() => {
+    const getGenre = () => dispatch(getGenresAction())
+    setGameState(games)
+
+    getGenre()
+
+  },[dispatch,games])
+   const handeChange = async (event) => { 
 
     const gamesfilter = games.filter(game => game.genres.some( genre  => genre.name === event.target.value))
      dispatch(filterByGenresAction(gamesfilter)) 
  
     }
+
+    const handeChangeOrder =  (event) => { 
+
+        if(event.target.value === 'desc') {
+          const gamesfilter = [...games].sort((a,b)=> b.name.localeCompare(a.name) )
+          setGameState(gamesfilter)
+          dispatch(orderByAction(gamesfilter))
+          } 
+
+          if(event.target.value === 'asc') {
+            const gamesfilter = [...games].sort((a,b)=> a.name.localeCompare(b.name) )
+            setGameState(gamesfilter)
+            dispatch(orderByAction(gamesfilter))
+            } 
+
+      }
     
    return (
     <div>
@@ -59,9 +73,11 @@ const Games = () => {
                    <div className={styles.select}>
 
                           <label htmlFor="">Ordenar Por orden alfabetico</label>
-                         <select name="" id="">
-                         <option value="">Asendente</option>
-                          <option value="">Desendente</option>
+                         <select name="" id="" onChange={handeChangeOrder}>
+                         <option value=''>Seleccionar</option>
+
+                         <option value='asc'>Ascendente</option>
+                          <option value="desc">Descendente</option>
                          </select>
 
                           </div>
@@ -78,7 +94,7 @@ const Games = () => {
                   </form>
               </div>
 
-              <Pagination games={filteredGames.length > 0 ? filteredGames : games} />
+              <Pagination  games={ filteredGames.length === 0 ? games : filteredGames} />
 
           
         </div>
