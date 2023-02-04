@@ -1,0 +1,229 @@
+import React, { useState,useEffect } from "react";
+import styles from "./Form.module.css";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addGameAction } from "../../redux/actions";
+import Alerta from "../Alerta/Alerta";
+const Form = () => {
+
+
+  const dispatch = useDispatch()
+
+
+
+  const genres = useSelector(state => state.genres)
+
+  const alerta = useSelector(state => state.alerta)
+
+  const [inputs, setInputs] = useState({
+    name: "",
+    relase_date: "",
+    rating: "",
+    platforms: [],
+    background_image: "",
+    description: "",
+    genreName: []
+  });
+
+
+  const handleSubmit = (e) => {
+   
+    e.preventDefault()
+    
+    if([inputs.name, inputs.relase_date,inputs.rating,inputs.platforms,inputs.background_image,inputs.description].includes("") || inputs.platforms.length === 0 ) {
+      console.log('todos son obligatorios')
+    } else {
+      //añadir a la bd
+      const addGame = () => dispatch(addGameAction(inputs))
+
+      addGame()
+    }
+
+  };
+
+  const handleChange = (e) => {
+    const updateInputs = { ...inputs };
+    
+    if (e.target.checked) {
+      if (e.target.name === 'genreName') {
+       
+        updateInputs.genreName = [...updateInputs.genreName, e.target.value];
+      } else if (e.target.name === 'platforms') {
+        
+        updateInputs.platforms = [...updateInputs.platforms, e.target.value];
+      }
+    } else {
+      if (e.target.name === 'genreName') {
+        updateInputs.genreName = updateInputs.genreName.filter(
+          (value) => value !== e.target.value
+        );
+      } else if (e.target.name === 'platforms') {
+        updateInputs.platforms = updateInputs.platforms.filter(
+          (value) => value !== e.target.value
+        );
+      } else {
+        updateInputs[e.target.name] = e.target.value;
+      }
+    }
+
+    console.log(updateInputs)
+    setInputs(updateInputs);
+  };
+
+  return (
+     
+   
+    <div className={styles.contenedor}>
+      {alerta && <Alerta message='No se pudo crear el juego' danger={true}/> }
+      <form onSubmit={handleSubmit} autoComplete="off">
+        <div className={styles.inputBox}>
+          <input
+            onChange={handleChange}
+            type="text"
+            name="name"
+            placeholder="Nombre"
+          />
+        </div>
+
+        <div className={styles.inputBox}>
+          <input
+            type="text"
+            name="relase_date"
+            placeholder="Fecha de lanzamiento"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.inputBox}>
+          <input
+            type="text"
+            name="rating"
+            placeholder="Rating"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.inputBox}>
+            <p>Plataformas</p>
+          <div className={styles.check}>
+          <div className={styles.flex_col}>
+              <label htmlFor="">PlayStation 5</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                value="PlayStation 5"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+
+              <label htmlFor="">PlayStation 4</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                value="PlayStation 4"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+
+              <label htmlFor="">PlayStation 3</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                onChange={handleChange}
+                value="PlayStation 3"
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+
+              <label htmlFor="">Xbox Series S/X</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                onChange={handleChange}
+                value="Xbox Series S/X"
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+
+              <label htmlFor="">Xbox 360</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                onChange={handleChange}
+                value="Xbox 360"
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+
+              <label htmlFor="">Xbox One</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                onChange={handleChange}
+                value="Xbox 360"
+              />
+            </div>
+
+            <div className={styles.flex_col}>
+              <label htmlFor="">PC</label>
+              <input
+                type="checkbox"
+                name="platforms"
+                onChange={handleChange}
+                value="pc"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.inputBox}>
+          <input
+            type="text"
+            name="background_image"
+            placeholder="background_image"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.inputBox}>
+          <textarea
+            type="text"
+            name="description"
+            placeholder="Descripcion"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className={styles.check}>
+            { genres.length > 0 &&  genres.map((e,i) => (
+              <div key={i} className={styles.flex_col}>
+              <label htmlFor="">{e.name}</label>
+              <input
+                type="checkbox"
+                name="genreName"
+                value={e.name}
+                onChange={handleChange}
+              />
+            </div>
+            ))}
+            </div>
+
+        <div className={styles.contenedorButton}>
+          <button type="submit" className={styles.button}>
+            {" "}
+            Añadir Juego
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Form;

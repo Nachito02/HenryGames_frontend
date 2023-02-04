@@ -1,0 +1,28 @@
+
+
+.contenedorImg {
+    width: 380px;
+    height: 218px;
+}
+
+
+
+.contenedorImg img {
+    height: 100%;
+    border-radius: 1rem;
+    transition: all .3s ease;
+
+}
+.contenedorImg:hover img {
+    transform: scale(1.03);
+}
+
+.contenedor {
+
+    margin-bottom: 3rem;
+}
+
+.nombre {
+    color: white;
+    margin-top: .5rem;
+}

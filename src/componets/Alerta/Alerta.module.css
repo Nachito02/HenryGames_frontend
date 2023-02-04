@@ -1,0 +1,13 @@
+.alerta {
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    height: 2rem;
+    align-items: center;
+    font-size: 1.4rem;
+}
+
+.alerta_true {
+    background-color: green;
+
+}

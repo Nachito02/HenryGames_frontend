@@ -1,0 +1,35 @@
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+
+.form {
+    display: flex;
+    justify-content: center;
+    color :white;
+    gap: 3rem;
+    padding: 1rem;
+}
+
+.select {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.select select {
+    height: 2rem;
+    width:  8rem;
+    font-size: .9rem;
+    outline: none;
+    background-color: #272727;
+    border-color:  #ff5400;
+    color: white;
+}
+.select select option {
+   padding: 1rem;
+}

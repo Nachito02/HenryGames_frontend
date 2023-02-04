@@ -1,0 +1,41 @@
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+.input {
+    outline: none;
+    background-color: #ff5400;
+    border: none;
+    border-radius: 1rem;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+}
+
+
+.inputbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.input::placeholder {
+    color: #b7b7b7;
+    font-size: 1.2rem;
+
+}
+.button {
+    position: absolute;
+    padding: 1rem 1rem;
+    background-image: url('../../images/search.svg');
+    background-color: #ff5400;
+    border: none;
+    background-repeat: no-repeat;
+    right: 5px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
