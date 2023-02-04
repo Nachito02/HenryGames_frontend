@@ -1,15 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./Form.module.css";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addGameAction } from "../../redux/actions";
 import Alerta from "../Alerta/Alerta";
 const Form = () => {
 
-
   const dispatch = useDispatch()
-
-
 
   const genres = useSelector(state => state.genres)
 

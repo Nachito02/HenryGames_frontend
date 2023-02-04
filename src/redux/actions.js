@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY } from "./types";
+import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET } from "./types";
 
 import clienteAxios from "../config/axios";
 
@@ -107,5 +107,17 @@ export function orderByAction(games) {
 
 const orderBy = (games) => ({
     type: ORDER_BY,
+    payload: games
+})
+
+
+
+export function resetAction(games) {
+    return async (dispatch) => {
+       await dispatch(reset(games))
+    }
+}
+const reset = (games) => ({
+    type: RESET,
     payload: games
 })

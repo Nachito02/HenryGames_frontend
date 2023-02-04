@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import GameCard from '../GameCard/GameCard';
 import styles from './Pagination.module.css'
 
-const Pagination = ({ games }) => {
+const Pagination = ({ games, currentPage, setCurrentPage }) => {
 
 
-  const [currentPage, setCurrentPage] = useState(1);
+
+
   const [gamesPerPage] = useState(15);
 
 

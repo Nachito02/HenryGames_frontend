@@ -11,3 +11,5 @@ export const ADD_GAME_ERROR ="ADD_GAME_ERROR"
 export const FILTER_BY_GENRE ="FILTER_BY_GENRE"
 
 export const ORDER_BY = "ORDER_BY"
+
+export const RESET = "RESET"

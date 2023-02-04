@@ -19,14 +19,9 @@ const GamePage = (props) => {
   const alerta = useSelector((state) => state.alerta);
 
 
-  const rating = (num) => {
-    const numeroEntero = Math.round(num);
+ 
 
-
-    return numeroEntero;
-  };
-
-  return game?.id == id ? (
+  return game?.id === parseInt(id) ? (
     <div>
     
       <div className={styles.contenedor}>
@@ -50,7 +45,7 @@ const GamePage = (props) => {
           </div>
 
           <div className={styles.contenedorButton}>
-            <Link className={styles.button}>Visita la pagina web</Link>
+            <Link to="" className={styles.button}>Visita la pagina web</Link>
           </div>
         </div>
       </div>

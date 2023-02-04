@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME,GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR,FILTER_BY_GENRE, ORDER_BY } from "./types"
+import { GET_GAMES, GET_GAME, ADD_GAME,GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR,FILTER_BY_GENRE, ORDER_BY, RESET } from "./types"
 
 const initalState = {
     games: [],
@@ -49,8 +49,21 @@ const rootReducer = (state = initalState, action) => {
                         }
 
                         case ORDER_BY:
-                            return {
-                                ...state, games:action.payload
+                                if(state.filteredGames.length === 0) {
+                                    return {
+                                        ...state, games:action.payload
+                                    }
+                                } else {
+                                    return {
+                                        ...state, filteredGames:action.payload
+                                    }
+                                }
+                        
+
+                            case RESET: {
+                                return {
+                                    ...state, games:action.payload, filteredGames:[]
+                                }
                             }
 
         default:
