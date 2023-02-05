@@ -19,9 +19,8 @@ const GamePage = (props) => {
   const alerta = useSelector((state) => state.alerta);
 
 
- 
 
-  return game?.id === parseInt(id) ? (
+  return game?.id == id ? (
     <div>
     
       <div className={styles.contenedor}>

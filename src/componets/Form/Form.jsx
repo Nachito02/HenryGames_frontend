@@ -62,7 +62,6 @@ const Form = () => {
       }
     }
 
-    console.log(updateInputs)
     setInputs(updateInputs);
   };
 

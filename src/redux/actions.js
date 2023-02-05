@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET } from "./types";
+import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET, ORDER_BY_RATING, FILTER_BY_BD, RESET_ALERTA } from "./types";
 
 import clienteAxios from "../config/axios";
 
@@ -47,7 +47,7 @@ export  function addGameAction(game) {
     return async (dispatch) => {
       
         try {
-            await clienteAxios.post('/api/videogasmes',game)
+            await clienteAxios.post('/api/videogames',game)
             dispatch(addGame(game))
 
 
@@ -121,3 +121,39 @@ const reset = (games) => ({
     type: RESET,
     payload: games
 })
+
+
+
+export function orderByRatingAction(games) {
+    return async (dispatch) => {
+       await dispatch(orderByRating(games))
+    }
+}
+
+const orderByRating = (games) => ({
+    type: ORDER_BY_RATING,
+    payload: games
+})
+
+
+export function orderByBdAction(games,orden) {
+    return async (dispatch) => {
+       await dispatch(orderByBD(games,orden))
+    }
+}
+
+const orderByBD = (games,orden) => ({
+    type: FILTER_BY_BD,
+    payload:games,
+    orden : orden
+})
+
+
+export function resetAlertAction(value) {
+    return async (dispatch) => {
+       await dispatch({
+        type :RESET_ALERTA,
+        payload: value
+       })
+    }
+}
