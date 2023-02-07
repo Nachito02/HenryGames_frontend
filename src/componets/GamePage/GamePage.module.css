@@ -2,14 +2,7 @@
 .contenedor {
     background-size: cover;
     display: flex;
-    padding-top: 500px;
     overflow: hidden;
-    position: relative;
-}
-
-    .parallax {
-    position: absolute;
-    top: 0;
 }
 
 .parallax img {
@@ -19,23 +12,21 @@
 }
 
 .main {
-    width: 100%;
     display: flex;
-    gap: 2rem;
-    position: absolute;
-    justify-content: center;
-    bottom: -200px;
-    padding: 5rem;
+    align-items: center;
 
 }
 
-.img {
-    flex: 1;
-}
+
+
 
 .img img {
     max-width: 100%;
     border-radius: 1rem;
+}
+
+.img {
+    display: none;
 }
 .info {
     flex: 1;
@@ -59,11 +50,10 @@
 
 .platform {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: .5rem;
     text-align: center;
     margin-top: 1rem;
-
 }
 
 .platform p {
@@ -101,22 +91,24 @@
     max-width: 1200px;
     margin: 0 auto;
     box-sizing: inherit;
-    margin-top: 15rem;
     height: 22rem;
     color: white;
+    margin-top: 1rem;
+    text-align: center;
 }
 .contenedorAbout p {
-    margin-top: 1rem;
     font-weight: 300;
     line-height: 1.5;
     color: #909090;
-
+    margin: 0;
 }
 .contenedorAbout {
    display: flex;
-   justify-content: center;
-   
-    gap: 4rem;
+   flex-direction: column;
+   margin-top: 1rem;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: left;
 }
 
 .rating {
@@ -199,3 +191,61 @@
     color: #909090;
 
   }
+  
+  @media screen and (min-width: 768px) {
+    .contenedor {
+        background-size: cover;
+        display: flex;
+        padding-top: 500px;
+        overflow: hidden;
+        position: relative;
+        max-width: 100%;
+    }
+
+    .parallax {
+        position: absolute;
+        top: 0;
+    }
+    .main {
+        max-width: 100%;
+        display: flex;
+        gap: 2rem;
+        position: absolute;
+        justify-content: center;
+        padding: 5rem;
+        top: 300px;
+    }
+
+    .img {
+        display: block;
+        flex: 1;
+    }
+
+    .platform {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .about {
+        margin-top: 12rem;
+        text-align: center;
+
+    }
+
+    .contenedorAbout {
+        flex-direction: row;
+    }
+}
+  @media screen and (min-width: 1024px) {
+ 
+
+    .about {
+        margin-top: 15rem;
+        text-align: start;
+
+    }
+    
+    .contenedorAbout {
+        padding: 0;
+    }
+  }
+

@@ -7,7 +7,7 @@ html {
 }
 
 body {
-
+  position: relative;
   background-color: #272727;
   margin: 0;
   font-family: 'PT Sans', sans-serif;

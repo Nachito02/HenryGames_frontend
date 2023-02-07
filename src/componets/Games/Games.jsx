@@ -73,29 +73,27 @@ const Games = () => {
 
         if(event.target.value === 'desc') {
             if(filteredGames.length === 0) {
-              const gamesfilter = [...games].sort((a,b)=> b.rating+a.rating )
+              const gamesfilter = [...games].sort((a,b)=> a.rating - b.rating )
               dispatch(orderByRatingAction(gamesfilter))
             } else {
-              const gamesfilter = [...filteredGames].sort((a,b)=> b.rating - a.rating )
+              const gamesfilter = [...filteredGames].sort((a,b)=> a.rating - b.rating )
               dispatch(orderByRatingAction(gamesfilter))
             }
           } 
 
           if(event.target.value === 'asc') {
             if(filteredGames.length === 0) {
-
-            const gamesfilter = [...games].sort((a,b)=> a.name.localeCompare(b.name) )
-           
-            dispatch(orderByAction(gamesfilter)) 
-            }else {
-              const gamesfilter = [...filteredGames].sort((a,b)=> a.name.localeCompare(b.name) )
-              dispatch(orderByAction(gamesfilter))
+              const gamesfilter = [...games].sort((a,b)=>b.rating - a.rating )
+              dispatch(orderByRatingAction(gamesfilter))
+            } else {
+              const gamesfilter = [...filteredGames].sort((a,b)=> b.rating - a.rating )
+              dispatch(orderByRatingAction(gamesfilter))
             }
             } 
       }
 
-    const handleReset =  () => {  
-     
+    const handleReset =  (e) => {  
+     e.preventDefault()
       dispatch(resetAction(gameState))
       dispatch(resetAlertAction(false))
       setCurrentPage(1)
