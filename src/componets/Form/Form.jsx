@@ -3,54 +3,93 @@ import styles from "./Form.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addGameAction } from "../../redux/actions";
 import Alerta from "../Alerta/Alerta";
+import { setAlerta } from "../../redux/actions";
+import { useHistory } from "react-router-dom";
+import { resetAction } from "../../redux/actions";
 const Form = () => {
 
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const genres = useSelector(state => state.genres)
-
+  const games = useSelector(state => state.games)
   const alerta = useSelector(state => state.alerta)
+
+  const [message, setMessage] = useState({
+    message :'',
+    danger: ''
+  })
 
   const [inputs, setInputs] = useState({
     name: "",
-    relase_date: "",
+    released: "",
     rating: "",
     platforms: [],
     background_image: "",
     description: "",
-    genreName: []
+    genres: []
   });
-
 
   const handleSubmit = (e) => {
    
     e.preventDefault()
     
-    if([inputs.name, inputs.relase_date,inputs.rating,inputs.platforms,inputs.background_image,inputs.description].includes("") || inputs.platforms.length === 0 ) {
-      console.log('todos son obligatorios')
+    if([inputs.name, inputs.released,inputs.rating,inputs.platforms,inputs.background_image,inputs.description].includes("") || inputs.platforms.length === 0 ) {
+      dispatch(setAlerta(true, 'Hubo un error al crear el juego'))
+      setMessage({
+        message: 'Todos los campos son obligatorios',
+        danger: true
+      })
+      setTimeout(() => {
+        dispatch(setAlerta(false))
+      }, 5000)
+    return
     } else {
       //añadir a la bd
-      const addGame = () => dispatch(addGameAction(inputs))
 
+
+      const addGame = () => dispatch(addGameAction(inputs))
       addGame()
+      dispatch(setAlerta(true))
+      setMessage({
+        message: 'Agregado Correctamente, seras redireccionado a la pagina principal',
+        danger: false
+      })
+
+      setInputs({
+        name: "",
+        released: "",
+        rating: "",
+        platforms: [],
+        background_image: "",
+        description: "",
+        genres: []
+      })
+
     }
+
+    setTimeout(() => {
+      dispatch(setAlerta(false))
+        history.push('/games')
+    }, 5000)
 
   };
 
   const handleChange = (e) => {
+    console.log(inputs.released)
     const updateInputs = { ...inputs };
     
     if (e.target.checked) {
-      if (e.target.name === 'genreName') {
+      if (e.target.name === 'genres') {
        
-        updateInputs.genreName = [...updateInputs.genreName, e.target.value];
+        updateInputs.genres = [...updateInputs.genres, e.target.value];
       } else if (e.target.name === 'platforms') {
         
         updateInputs.platforms = [...updateInputs.platforms, e.target.value];
       }
     } else {
-      if (e.target.name === 'genreName') {
-        updateInputs.genreName = updateInputs.genreName.filter(
+      if (e.target.name === 'genres') {
+        updateInputs.genres = updateInputs.genres.filter(
           (value) => value !== e.target.value
         );
       } else if (e.target.name === 'platforms') {
@@ -69,7 +108,8 @@ const Form = () => {
      
    
     <div className={styles.contenedor}>
-      {alerta && <Alerta message='No se pudo crear el juego' danger={true}/> }
+      
+      {alerta && <Alerta message={message?.message} danger={message?.danger}/> }
       <form onSubmit={handleSubmit} autoComplete="off">
         <div className={styles.inputBox}>
           <input
@@ -82,19 +122,22 @@ const Form = () => {
 
         <div className={styles.inputBox}>
           <input
-            type="text"
-            name="relase_date"
+            type="date"
+            name="released"
             placeholder="Fecha de lanzamiento"
+
             onChange={handleChange}
           />
         </div>
 
         <div className={styles.inputBox}>
           <input
-            type="text"
+            type="number"
             name="rating"
             placeholder="Rating"
             onChange={handleChange}
+        min="1"
+        max="5"
           />
         </div>
 
@@ -108,6 +151,7 @@ const Form = () => {
                 name="platforms"
                 value="PlayStation 5"
                 onChange={handleChange}
+                
               />
             </div>
 
@@ -202,7 +246,7 @@ const Form = () => {
               <label htmlFor="">{e.name}</label>
               <input
                 type="checkbox"
-                name="genreName"
+                name="genres"
                 value={e.name}
                 onChange={handleChange}
               />

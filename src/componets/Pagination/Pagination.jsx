@@ -1,18 +1,20 @@
+
 import React, { useState } from 'react';
 import GameCard from '../GameCard/GameCard';
 import styles from './Pagination.module.css'
 
+
+//@ai write las lineas de este codigo
+
+
 const Pagination = ({ games, currentPage, setCurrentPage }) => {
-
-
 
 
   const [gamesPerPage] = useState(15);
 
-
   // Get current games
-  const indexOfLastGame = currentPage * gamesPerPage;
-  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const indexOfLastGame = currentPage * gamesPerPage; // 1  /30 
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage; // 15 - 15
   const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
 
   // Cambiar de pagina
@@ -23,7 +25,7 @@ const Pagination = ({ games, currentPage, setCurrentPage }) => {
          <nav className={styles.nav}>
         <ul className='pagination'>
           {[...Array(Math.ceil(games.length / gamesPerPage)).keys()].map(i => (
-            <li key={i} className='page-item'>
+            <li key={i} >
               <button onClick={() => paginate(i + 1)} >
                 {i + 1}
               </button>
@@ -49,6 +51,8 @@ const Pagination = ({ games, currentPage, setCurrentPage }) => {
         </ul>
       </nav>
     </div>
+
+  
   );
 };
 

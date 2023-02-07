@@ -79,6 +79,7 @@ const GamePage = (props) => {
 
                 <div>
                   <p>Fecha de lanzamiento: {game.released} </p>
+                  {console.log(game)}
                 </div>
 
                 <div>

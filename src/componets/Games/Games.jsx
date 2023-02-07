@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import { getGamesAction } from "../../redux/actions";
 import styles from './Games.module.css'
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
-import { getGenresAction,filterByGenresAction,orderByAction, resetAction, orderByRatingAction, orderByBdAction,resetAlertAction } from "../../redux/actions";
+import { getGenresAction,filterByGenresAction,orderByAction, resetAction, orderByRatingAction, orderByBdAction,resetAlertAction,getGamesAction } from "../../redux/actions";
 import Alerta from '../Alerta/Alerta';
 const Games = () => {
   const dispatch = useDispatch()
 
     const [gameState, setGameState] = useState([])
-    const [isStateSet, setIsStateSet] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
+  const [isStateSet, setIsStateSet] = useState(false)
 
   const [filtrados, setFiltrados] = useState([])
 
@@ -19,32 +18,22 @@ const Games = () => {
   const genres = useSelector(state => state.genres)
   const filteredGames = useSelector((state) => state.filteredGames);
   const alerta = useSelector((state) => state.alerta);
-
-
+   useEffect(() => {
+    const getGenre = () => dispatch(getGenresAction())
+    getGenre()
+  },[dispatch])
   useEffect(() => {
     //consultar api
     const loadGames = () => dispatch(getGamesAction()) 
     loadGames()
    },[dispatch])
 
-
-
-   useEffect(() => {
-    const getGenre = () => dispatch(getGenresAction())
-
-    getGenre()
-
-
-  },[dispatch])
-
   useEffect(() => {
     if (!isStateSet && games.length !== 0) {
         setGameState(games)
         setIsStateSet(true)
     }
-}, [games, isStateSet])
-
-
+}, [games])
 
 
    const handleChange = async (event) => { 
@@ -54,6 +43,7 @@ const Games = () => {
      setCurrentPage(1)
  
     }
+
 
     const handleChangeOrder =  (event) => { 
 
@@ -104,12 +94,12 @@ const Games = () => {
             } 
       }
 
-    const handleReset =  (e) => {  
-      e.preventDefault()
+    const handleReset =  () => {  
+     
       dispatch(resetAction(gameState))
       dispatch(resetAlertAction(false))
+      setCurrentPage(1)
     }
-
 
     const filterDB = (e) => {
       

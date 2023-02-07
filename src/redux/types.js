@@ -16,3 +16,6 @@ export const FILTER_BY_BD = "FILTER_BY_BD"
 export const RESET = "RESET"
 
 export const RESET_ALERTA = "RESET_ALERTA"
+export const SET_ALERTA = "SET_ALERTA"
+
+export const SEARCH_GAME = "SEARCH_GAME"

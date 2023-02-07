@@ -1,3 +1,4 @@
+import React,{useState,useEffect} from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Home from './componets/Home/Home';
@@ -5,8 +6,15 @@ import Barra from './componets/Barra/Barra'
 import Games from './componets/Games/Games';
 import GamePage from './componets/GamePage/GamePage';
 import CrearJuego from './componets/CrearJuego/CrearJuego';
+import { useDispatch } from "react-redux";
+import { getGamesAction, getGenresAction } from './redux/actions';
 function App() {
+
+ 
+
+
   return (
+
     <div className="App">
       <Barra />
 

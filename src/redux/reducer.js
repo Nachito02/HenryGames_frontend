@@ -10,7 +10,9 @@ import {
   RESET,
   ORDER_BY_RATING,
   FILTER_BY_BD,
-  RESET_ALERTA
+  RESET_ALERTA,
+  SEARCH_GAME,
+  SET_ALERTA
 } from "./types";
 
 const initalState = {
@@ -19,7 +21,7 @@ const initalState = {
   genres: [],
   alerta: null,
   filteredGames: [],
-  filteredByOrgin: [],
+  searchedGame: [],
 };
 
 const rootReducer = (state = initalState, action) => {
@@ -30,9 +32,14 @@ const rootReducer = (state = initalState, action) => {
             games: action.payload,
           }
 
+          case SEARCH_GAME: 
+          return {
+            ...state, filteredGames:action.payload
+          }
 
-    case RESET_ALERTA: {
-        return {...state, alerta: action.payload}
+        case SET_ALERTA:
+      case RESET_ALERTA: {
+        return {...state, alerta: action.payload }
     }
 
     case ADD_GAME_ERROR:
@@ -49,9 +56,10 @@ const rootReducer = (state = initalState, action) => {
       };
 
     case ADD_GAME:
+      
       return {
         ...state,
-        games: [state.games, action.payload],
+        games: [...state.games, action.payload]
       };
 
     case GET_GENRES:
@@ -91,11 +99,11 @@ const rootReducer = (state = initalState, action) => {
     case FILTER_BY_BD:
       if (action.orden === "db") {
         if (state.filteredGames.length === 0) {
-          let filtrado = action.payload.filter((e) => e.id.length > 7);
+          let filtrado = action.payload.filter((e) => e.id?.length > 7);
           if (filtrado.length !== 0) {
             return {
               ...state,
-              games: action.payload.filter((e) => e.id.length > 7),
+              games: action.payload.filter((e) => e.id?.length > 7),
             };
           } else {
             return {
@@ -104,11 +112,11 @@ const rootReducer = (state = initalState, action) => {
             };
           }
         } else {
-          let filtrado = action.payload.filter((e) => e.id.length > 7);
+          let filtrado = action.payload.filter((e) => e.id?.length > 7);
           if (filtrado.length !== 0) {
             return {
               ...state,
-              filteredGames: action.payload.filter((e) => e.id.length > 7),
+              filteredGames: action.payload.filter((e) => e.id?.length > 7),
             };
           } else {
             return {
@@ -124,14 +132,14 @@ const rootReducer = (state = initalState, action) => {
           return {
             ...state,
             games: action.payload.filter(
-              (e) => e.id.toLocaleString().length < 7
+              (e) => e.id?.toLocaleString().length < 7
             ),
           };
         } else {
           return {
             ...state,
             filteredGames: action.payload.filter(
-              (e) => e.id.toLocaleString().length < 7
+              (e) => e.id?.toLocaleString().length < 7
             ),
           };
         }

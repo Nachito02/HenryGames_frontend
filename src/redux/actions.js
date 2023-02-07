@@ -1,4 +1,4 @@
-import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET, ORDER_BY_RATING, FILTER_BY_BD, RESET_ALERTA } from "./types";
+import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET, ORDER_BY_RATING, FILTER_BY_BD, RESET_ALERTA, SEARCH_GAME, SET_ALERTA } from "./types";
 
 import clienteAxios from "../config/axios";
 
@@ -47,10 +47,8 @@ export  function addGameAction(game) {
     return async (dispatch) => {
       
         try {
-            await clienteAxios.post('/api/videogames',game)
-            dispatch(addGame(game))
-
-
+           const respuesta = await clienteAxios.post('/api/videogames',game)
+             await  dispatch(addGame(respuesta.data))
         }
         catch(error) {
             dispatch(addGameError(true))
@@ -154,6 +152,33 @@ export function resetAlertAction(value) {
        await dispatch({
         type :RESET_ALERTA,
         payload: value
+       })
+    }
+}
+
+export function searchGameAction(game) {
+    return async (dispatch) => {
+        try {
+            const respuesta= await clienteAxios.get(`/api/videogame/search/${game}`)
+            dispatch(searchGame(respuesta.data))
+        } catch (error) {
+            dispatch(getGameError(true))
+        }
+    }
+}
+
+const searchGame = game => ({
+    type :SEARCH_GAME,
+    payload: game
+   })
+
+
+   export function setAlerta(value) {
+    return async (dispatch) => {
+       await dispatch({
+        type :SET_ALERTA,
+        payload: value,
+
        })
     }
 }
