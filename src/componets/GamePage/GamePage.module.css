@@ -236,14 +236,11 @@
     }
 }
   @media screen and (min-width: 1024px) {
- 
-
     .about {
         margin-top: 15rem;
         text-align: start;
 
     }
-    
     .contenedorAbout {
         padding: 0;
     }

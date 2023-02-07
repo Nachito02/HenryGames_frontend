@@ -35,6 +35,13 @@ const Games = () => {
     }
 }, [games])
 
+  useEffect(() => {
+
+      if(alerta) {
+        dispatch(resetAction(gameState))
+      }
+
+  }, [alerta])
 
    const handleChange = async (event) => { 
     const gamesfilter = games.filter(game => game.genres.some( genre  => genre.name === event.target.value))

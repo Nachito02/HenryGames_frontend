@@ -1,7 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import styles from './Barra.module.css'
+import { useLocation } from 'react-router-dom'
 const Barra = () => {
+  const location = useLocation()
+
   return (
 
    <div className={styles.container}>
@@ -10,11 +13,10 @@ const Barra = () => {
     </div>
 
         <nav className={styles.nav}>
-        <Link to='/'> Inicio </Link>
+        {location.pathname !== '/' ?  <Link to='/'> Inicio </Link> : null }
         <Link to='/games'> Juegos </Link>
         <Link to='/crearjuego'> Añade tu juego </Link>
 
-        
         </nav>
    </div>
   )

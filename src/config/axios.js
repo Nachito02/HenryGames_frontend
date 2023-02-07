@@ -8,6 +8,5 @@ const clienteAxios = axios.create({
 })
 
 
-console.log()
 
 export default clienteAxios
