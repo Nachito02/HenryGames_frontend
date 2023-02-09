@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from './Games.module.css'
 import SearchBar from '../SearchBar/SearchBar';
 import Pagination from '../Pagination/Pagination';
-import { getGenresAction,filterByGenresAction,orderByAction, resetAction, orderByRatingAction, orderByBdAction,resetAlertAction,getGamesAction } from "../../redux/actions";
+import { getGenresAction,filterByGenresAction,orderByAction, resetAction, orderByRatingAction, orderByBdAction,resetAlertAction,getGamesAction, setAlerta } from "../../redux/actions";
 import Alerta from '../Alerta/Alerta';
+import Spinner from '../Spinner/Spinner';
+
 const Games = () => {
   const dispatch = useDispatch()
 
@@ -33,22 +35,31 @@ const Games = () => {
         setGameState(games)
         setIsStateSet(true)
     }
-}, [games])
+}, [games, isStateSet])
 
   useEffect(() => {
-
+    
       if(alerta) {
         dispatch(resetAction(gameState))
       }
 
-  }, [alerta])
+  }, [alerta, dispatch, gameState])
 
    const handleChange = async (event) => { 
+    
+      if(event.target.value === 'all') {
+        dispatch(resetAction(gameState))
+      }
+   
     const gamesfilter = games.filter(game => game.genres.some( genre  => genre.name === event.target.value))
-    setFiltrados(gamesfilter)
-     dispatch(filterByGenresAction(gamesfilter)) 
-     setCurrentPage(1)
- 
+        if(gamesfilter.length === 0) {
+          setAlerta('No se encontraron juegos con el filtro seleccionado')
+        } else {
+          setFiltrados(gamesfilter)
+          dispatch(filterByGenresAction(gamesfilter)) 
+          setCurrentPage(1)
+        }
+     
     }
 
 
@@ -108,6 +119,10 @@ const Games = () => {
 
     const filterDB = (e) => {
       
+      if(e.target.value === 'all') {
+        dispatch(resetAction(gameState))
+      }
+
       if(e.target.value === 'db') {
         if(filtrados.length === 0) {
           dispatch(orderByBdAction(gameState,'db'))
@@ -135,6 +150,7 @@ const Games = () => {
                    <div className={styles.select}>
                    <label htmlFor="">Filtrar Por genero</label>
                     <select name="" id=""  onChange={handleChange}>
+                        <option value="all">Mostrar todos</option>
                         {genres.map(e => 
                           <option key={e.id} value={e.name} >{e.name}</option>
                         )}
@@ -166,6 +182,7 @@ const Games = () => {
 
                          <label htmlFor="">Creado por:</label>
                          <select name="" id="" onChange={filterDB}>
+                          <option value="all">Mostrar todos</option>
                          <option value="api">API</option>
                           <option value="db">Base de datos</option>
                          </select>
@@ -173,9 +190,9 @@ const Games = () => {
                             <button onClick={handleReset}>RESET</button>
                   </form>
               </div>
-              {alerta && <Alerta danger={true} message='No existe el juego, presione reset para continuar' />}
+              {alerta && <Alerta danger={true} message='No existe el juego con los filtros seleccionados' />}
 
-              <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}  games={ filteredGames.length === 0 ? games : filteredGames} />
+                      {games.length === 0  ? ( <Spinner /> ) : (<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}  games={ filteredGames.length === 0 ? games : filteredGames} />) }
 
           
         </div>

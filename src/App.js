@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Home from './componets/Home/Home';
@@ -6,13 +6,9 @@ import Barra from './componets/Barra/Barra'
 import Games from './componets/Games/Games';
 import GamePage from './componets/GamePage/GamePage';
 import CrearJuego from './componets/CrearJuego/CrearJuego';
-import { useDispatch } from "react-redux";
-import { getGamesAction, getGenresAction } from './redux/actions';
+import Error404 from './componets/Error404/Error404';
+import Exito from './componets/Exito/Exito';
 function App() {
-
- 
-
-
   return (
 
     <div className="App">
@@ -21,8 +17,11 @@ function App() {
     <Switch>
         <Route exact path='/' component={Home}  />
         <Route exact path='/games' component={Games}  />
-        <Route  path='/game/:id' component={GamePage}  />
-        <Route  path='/crearjuego/' component={CrearJuego}  />
+        <Route exact path='/game/:id' component={GamePage}  />
+        <Route  exact path='/crearjuego/' component={CrearJuego}  />
+        <Route  exact path='/exito' component={Exito}  />
+
+        <Route    component={Error404}  />
 
 
     </Switch>

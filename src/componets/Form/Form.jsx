@@ -5,14 +5,14 @@ import { addGameAction } from "../../redux/actions";
 import Alerta from "../Alerta/Alerta";
 import { setAlerta } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
-import { resetAction } from "../../redux/actions";
+import Spinner from "../Spinner/Spinner";
 const Form = () => {
 
   const history = useHistory()
   const dispatch = useDispatch()
 
+  const [cargando, setCargando] = useState(false)
   const genres = useSelector(state => state.genres)
-  const games = useSelector(state => state.games)
   const alerta = useSelector(state => state.alerta)
 
   const [message, setMessage] = useState({
@@ -36,10 +36,14 @@ const Form = () => {
     
     if([inputs.name, inputs.released,inputs.rating,inputs.platforms,inputs.background_image,inputs.description].includes("") || inputs.platforms.length === 0 ) {
       dispatch(setAlerta(true, 'Hubo un error al crear el juego'))
+
+
       setMessage({
         message: 'Todos los campos son obligatorios',
         danger: true
       })
+
+
       setTimeout(() => {
         dispatch(setAlerta(false))
       }, 5000)
@@ -47,10 +51,12 @@ const Form = () => {
     } else {
       //añadir a la bd
 
-
+      setCargando(true)
       const addGame = () => dispatch(addGameAction(inputs))
+      
       addGame()
       dispatch(setAlerta(true))
+
       setMessage({
         message: 'Agregado Correctamente, seras redireccionado a la pagina principal',
         danger: false
@@ -70,8 +76,8 @@ const Form = () => {
 
     setTimeout(() => {
       dispatch(setAlerta(false))
-        history.push('/games')
-    }, 5000)
+        history.push('/exito')
+    }, 3000)
 
   };
 
@@ -106,8 +112,8 @@ const Form = () => {
 
   return (
      
-   
-    <div className={styles.contenedor}>
+    cargando === true ?(  <Spinner /> ) : (
+      <div className={styles.contenedor}>
       
       {alerta && <Alerta message={message?.message} danger={message?.danger}/> }
       <form onSubmit={handleSubmit} autoComplete="off">
@@ -262,6 +268,8 @@ const Form = () => {
         </div>
       </form>
     </div>
+    ) 
+    
   );
 };
 

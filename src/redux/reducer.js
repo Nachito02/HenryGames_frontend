@@ -144,12 +144,14 @@ const rootReducer = (state = initalState, action) => {
           };
         }
       }
+      break;
 
     default:
       return {
         ...state,
       };
-  }
+  } 
+  
 };
 
 export default rootReducer;

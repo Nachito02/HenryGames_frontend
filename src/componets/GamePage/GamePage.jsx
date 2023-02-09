@@ -6,6 +6,7 @@ import { getGameAction } from "../../redux/actions";
 import styles from "./GamePage.module.css";
 import { Link } from "react-router-dom";
 import Alerta from "../Alerta/Alerta";
+import Spinner from "../Spinner/Spinner";
 const GamePage = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -92,7 +93,7 @@ const GamePage = (props) => {
     </div>
   ) : (
   alerta ? <Alerta message = 'Hubo un error al cargar el juego' danger={true} /> :
-  'cargando...'
+  <Spinner />
   );
 };
 
