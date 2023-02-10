@@ -12,7 +12,8 @@ import {
   FILTER_BY_BD,
   RESET_ALERTA,
   SEARCH_GAME,
-  SET_ALERTA
+  SET_ALERTA,
+  DELETE_GAME
 } from "./types";
 
 const initalState = {
@@ -26,6 +27,14 @@ const initalState = {
 
 const rootReducer = (state = initalState, action) => {
   switch (action.type) {
+
+
+      case DELETE_GAME: 
+      console.log(action.payload)
+      return {
+        ...state, games : state.games.filter( (e) => e.id !== action.payload.id )
+      }
+
     case GET_GAMES:
         return {
             ...state,
@@ -144,7 +153,9 @@ const rootReducer = (state = initalState, action) => {
           };
         }
       }
-      break;
+
+
+        break;
 
     default:
       return {

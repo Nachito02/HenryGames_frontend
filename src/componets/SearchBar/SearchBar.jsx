@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './SearchBar.module.css'
 import { searchGameAction } from '../../redux/actions'
 import {  useDispatch } from "react-redux";
-const SearchBar = () => {
+const SearchBar = ({currentPage, setCurrentPage}) => {
 
   const [input,setInput] = useState('')
   
@@ -11,10 +11,14 @@ const SearchBar = () => {
 
     const handleClick = e => {
        e.preventDefault()
+
        if(input === '') {
         return
        }
           dispatch(searchGameAction(input))
+
+          setCurrentPage(1)
+          
           
     }
 

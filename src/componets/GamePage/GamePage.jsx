@@ -1,27 +1,68 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameAction } from "../../redux/actions";
+import { getGameAction,deleteGameAction } from "../../redux/actions";
 import styles from "./GamePage.module.css";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import Alerta from "../Alerta/Alerta";
 import Spinner from "../Spinner/Spinner";
 const GamePage = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
+
+  const history = useHistory()
+  const [showDelete, setShowDelete] = useState(false)
+  const [cargando,setCargando] = useState(false)
+
   useEffect(() => {
     const getGame = () => dispatch(getGameAction(id));
 
+      if(id.length > 7) {
+        setShowDelete(true)
+      }
+
     getGame();
+
+ 
+      
   }, [dispatch, id]);
 
   const game = useSelector((state) => state.findGame);
   const alerta = useSelector((state) => state.alerta);
 
+  useEffect(() => {
+    
+    if(game.id == id) {
+      setCargando(false)
+     }  else {
+      setCargando(true)
+     }
+
+  }, [game])
+  
+
+    const handleDelete =  (e) => { 
+        setCargando(true)
+        
+      
+        dispatch(deleteGameAction(id))
+
+         setTimeout(() => {
+          
+            setCargando(false)
+         history.push('/successdelete')
+
+         }, 3000);
 
 
-  return game?.id == id ? (
+
+     }
+
+     
+     if(cargando === true) return <Spinner />
+
+     else return game?.id == id ? (
     <div>
     
       <div className={styles.contenedor}>
@@ -29,7 +70,7 @@ const GamePage = (props) => {
           <img className={styles.bg} src={game.background_image} alt="" />
         </div>
       </div>
-
+    
       <div className={styles.main}>
         <div className={styles.img}>
           <img src={game.background_image} alt="" />
@@ -46,6 +87,9 @@ const GamePage = (props) => {
 
           <div className={styles.contenedorButton}>
             <Link to="" className={styles.button}>Visita la pagina web</Link>
+            {showDelete && (
+            <button className={styles.delete} onClick={handleDelete}>Eliminar</button>
+          )}
           </div>
         </div>
       </div>
@@ -92,8 +136,8 @@ const GamePage = (props) => {
       </div>
     </div>
   ) : (
-  alerta ? <Alerta message = 'Hubo un error al cargar el juego' danger={true} /> :
-  <Spinner />
+  alerta && <Alerta message = 'Hubo un error al cargar el juego' danger={true} /> 
+   
   );
 };
 

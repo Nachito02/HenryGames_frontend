@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: center;
+    color:black;
+    height: 12rem;
+    align-items: center;
+    background-color: red;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.button {
+    
+        padding: .5rem 2rem;
+        border: none;
+        background-color: #ff5400;
+        color: white;
+    
+}
+
+.button:hover {
+    cursor: pointer;
+}

@@ -1,6 +1,7 @@
-import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET, ORDER_BY_RATING, FILTER_BY_BD, RESET_ALERTA, SEARCH_GAME, SET_ALERTA } from "./types";
+import { GET_GAMES, GET_GAME, ADD_GAME, GET_GENRES, GET_GAME_ERROR, ADD_GAME_ERROR, FILTER_BY_GENRE, ORDER_BY, RESET, ORDER_BY_RATING, FILTER_BY_BD, RESET_ALERTA, SEARCH_GAME, SET_ALERTA,DELETE_GAME } from "./types";
 
 import clienteAxios from "../config/axios";
+import axios from "axios";
 
 const getGames = (games) =>({
     type: GET_GAMES,
@@ -13,6 +14,8 @@ export function getGamesAction() {
             const respuesta = await clienteAxios.get('/api/videogames')
 
             dispatch(getGames(respuesta.data))
+
+            
 
         } catch (error) {
             
@@ -181,4 +184,24 @@ const searchGame = game => ({
 
        })
     }
+}
+
+
+export function deleteGameAction(id) {
+    return async (dispatch) => { 
+
+
+            try {
+               const respuesta = await clienteAxios.delete(`/api/videogame/${id}`)
+
+               await dispatch({
+                type : DELETE_GAME,
+                payload: respuesta.data
+            })
+            } catch (error) {
+                console.log(error)
+            }
+
+      
+     }
 }

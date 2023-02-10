@@ -143,7 +143,7 @@ const Games = () => {
    return (
     <div>
         <div>
-            <SearchBar />
+            <SearchBar setCurrentPage={setCurrentPage} currentPage={currentPage} />
               <div>
                   <form action="" className={styles.form}>
                    
