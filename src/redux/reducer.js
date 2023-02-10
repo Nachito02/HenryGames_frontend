@@ -30,7 +30,6 @@ const rootReducer = (state = initalState, action) => {
 
 
       case DELETE_GAME: 
-      console.log(action.payload)
       return {
         ...state, games : state.games.filter( (e) => e.id !== action.payload.id )
       }

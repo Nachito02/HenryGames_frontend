@@ -99,6 +99,38 @@
     padding: .5rem 0;
     cursor: pointer;
 }
+.delete {
+    flex: 1;
+    background-color: red;
+    font-weight: 700;
+    border-radius: .8rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all .3s ease;
+    padding: .5rem 0;
+    cursor: pointer;
+    border: none;
+}
+
+.edit {
+    flex: 1;
+    background-color: green;
+    font-weight: 700;
+    border-radius: .8rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all .3s ease;
+    padding: .5rem 0;
+    cursor: pointer;
+    border: none;
+
+}
 
 .button:hover {
     background-color: #ffa700;

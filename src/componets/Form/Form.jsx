@@ -30,6 +30,9 @@ const Form = () => {
     genres: []
   });
 
+
+  
+
   const handleSubmit = (e) => {
    
     e.preventDefault()
@@ -82,7 +85,6 @@ const Form = () => {
   };
 
   const handleChange = (e) => {
-    console.log(inputs.released)
     const updateInputs = { ...inputs };
     
     if (e.target.checked) {
@@ -123,6 +125,7 @@ const Form = () => {
             type="text"
             name="name"
             placeholder="Nombre"
+            value={inputs.name}
           />
         </div>
 
@@ -131,6 +134,7 @@ const Form = () => {
             type="date"
             name="released"
             placeholder="Fecha de lanzamiento"
+            value={inputs.released}
 
             onChange={handleChange}
           />
@@ -144,6 +148,8 @@ const Form = () => {
             onChange={handleChange}
         min="1"
         max="5"
+        value={inputs.value}
+
           />
         </div>
 

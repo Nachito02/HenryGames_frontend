@@ -7,6 +7,8 @@ import styles from "./GamePage.module.css";
 import { Link,useHistory } from "react-router-dom";
 import Alerta from "../Alerta/Alerta";
 import Spinner from "../Spinner/Spinner";
+
+
 const GamePage = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -14,6 +16,7 @@ const GamePage = (props) => {
   const history = useHistory()
   const [showDelete, setShowDelete] = useState(false)
   const [cargando,setCargando] = useState(false)
+
 
   useEffect(() => {
     const getGame = () => dispatch(getGameAction(id));
@@ -33,13 +36,13 @@ const GamePage = (props) => {
 
   useEffect(() => {
     
-    if(game.id == id) {
+    if(game.id?.toLocaleString() === id.toLocaleString()) {
       setCargando(false)
      }  else {
       setCargando(true)
      }
 
-  }, [game])
+  }, [game,id])
   
 
     const handleDelete =  (e) => { 
@@ -59,12 +62,16 @@ const GamePage = (props) => {
 
      }
 
+
+
+
+
+
      
      if(cargando === true) return <Spinner />
 
-     else return game?.id == id ? (
+     else return game?.id?.toLocaleString() === id.toLocaleString() ? (
     <div>
-    
       <div className={styles.contenedor}>
         <div className={styles.parallax}>
           <img className={styles.bg} src={game.background_image} alt="" />
@@ -88,7 +95,11 @@ const GamePage = (props) => {
           <div className={styles.contenedorButton}>
             <Link to="" className={styles.button}>Visita la pagina web</Link>
             {showDelete && (
-            <button className={styles.delete} onClick={handleDelete}>Eliminar</button>
+            
+                <>
+                <button className={styles.delete} onClick={handleDelete}>Eliminar</button>
+            </>
+            
           )}
           </div>
         </div>
@@ -124,7 +135,6 @@ const GamePage = (props) => {
 
                 <div>
                   <p>Fecha de lanzamiento: {game.released} </p>
-                  {console.log(game)}
                 </div>
 
                 <div>
