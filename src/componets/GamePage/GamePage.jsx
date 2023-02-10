@@ -36,8 +36,15 @@ const GamePage = (props) => {
 
   useEffect(() => {
     
-    console.log(game.id?.toLocaleString() === id.toLocaleString())
-    if(game.id?.toLocaleString() === id.toLocaleString()) {
+console.log(id.toLocaleString())
+
+
+
+console.log(game.id?.toString())
+
+      
+    console.log(game.id?.toString() === id.toString())
+    if(game.id?.toString() === id.toString()) {
       setCargando(false)
      }  else {
       setCargando(true)
@@ -67,7 +74,7 @@ const GamePage = (props) => {
 
      if(cargando === true) return <Spinner />
 
-     else return game?.id?.toLocaleString() === id.toLocaleString() ? (
+     else return game?.id?.toString() === id.toString() ? (
     <div>
       <div className={styles.contenedor}>
         <div className={styles.parallax}>
