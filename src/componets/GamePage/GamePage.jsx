@@ -36,6 +36,7 @@ const GamePage = (props) => {
 
   useEffect(() => {
     
+    console.log(game.id?.toLocaleString() === id.toLocaleString())
     if(game.id?.toLocaleString() === id.toLocaleString()) {
       setCargando(false)
      }  else {
