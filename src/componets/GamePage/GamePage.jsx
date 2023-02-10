@@ -42,7 +42,7 @@ const GamePage = (props) => {
       setCargando(true)
      }
 
-  }, [game,id])
+  }, [game,id, setCargando])
   
 
     const handleDelete =  (e) => { 
@@ -64,10 +64,6 @@ const GamePage = (props) => {
 
 
 
-
-
-
-     
      if(cargando === true) return <Spinner />
 
      else return game?.id?.toLocaleString() === id.toLocaleString() ? (
