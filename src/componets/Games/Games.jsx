@@ -187,8 +187,11 @@ const Games = () => {
                           <option value="db">Base de datos</option>
                          </select>
                          </div>
-                            <button onClick={handleReset}>RESET</button>
+                            
                   </form>
+                  <div className={styles.resetContainer}>
+                              <button className={styles.buttonReset} onClick={handleReset}>RESET</button>
+                              </div>
               </div>
               {alerta && <Alerta danger={true} message='No existe el juego con los filtros seleccionados' />}
 
