@@ -23,6 +23,7 @@ const initalState = {
   alerta: null,
   filteredGames: [],
   searchedGame: [],
+  copyGames: []
 };
 
 const rootReducer = (state = initalState, action) => {
@@ -38,6 +39,7 @@ const rootReducer = (state = initalState, action) => {
         return {
             ...state,
             games: action.payload,
+            copyGames: action.payload
           }
 
           case SEARCH_GAME: 
@@ -67,7 +69,7 @@ const rootReducer = (state = initalState, action) => {
       
       return {
         ...state,
-        games: [...state.games, action.payload]
+        games: [ action.payload, ...state.games]
       };
 
     case GET_GENRES:
@@ -114,9 +116,11 @@ const rootReducer = (state = initalState, action) => {
               games: action.payload.filter((e) => e.id?.length > 7),
             };
           } else {
+            
             return {
               ...state,
-              alerta: "No existe",
+              games:state.copyGames,
+              alerta: "No existe el video juego con los datos seleccionados",
             };
           }
         } else {
@@ -129,7 +133,8 @@ const rootReducer = (state = initalState, action) => {
           } else {
             return {
               ...state,
-              alerta: true,
+              games:state.copyGames,
+              alerta: "No existe el video juego con los datos seleccionados",
             };
           }
         }

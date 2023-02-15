@@ -11,27 +11,37 @@ const Games = () => {
   const dispatch = useDispatch()
 
     const [gameState, setGameState] = useState([])
+
+    //defino el estado que me muestra la paginacion actual
   const [currentPage, setCurrentPage] = useState(1);
+
+
   const [isStateSet, setIsStateSet] = useState(false)
 
   const [filtrados, setFiltrados] = useState([])
 
+
+  const [alerta, setAlerta] = useState(false)
+
   const games = useSelector(state => state.games)
   const genres = useSelector(state => state.genres)
   const filteredGames = useSelector((state) => state.filteredGames);
-  const alerta = useSelector((state) => state.alerta);
+  const alertaReducer = useSelector((state => state.alerta))
+
+
    useEffect(() => {
     const getGenre = () => dispatch(getGenresAction())
     getGenre()
   },[dispatch])
-  useEffect(() => {
+  useEffect(() => { 
     //consultar api
+    if(games.length === 0) {
     const loadGames = () => dispatch(getGamesAction()) 
-    loadGames()
+    loadGames() }
    },[dispatch])
 
   useEffect(() => {
-    if (!isStateSet && games.length !== 0) {
+    if (!isStateSet && games.length >= 2) {
         setGameState(games)
         setIsStateSet(true)
     }
@@ -49,17 +59,24 @@ const Games = () => {
     
       if(event.target.value === 'all') {
         dispatch(resetAction(gameState))
+
+        return
       }
    
     const gamesfilter = games.filter(game => game.genres.some( genre  => genre.name === event.target.value))
         if(gamesfilter.length === 0) {
           setAlerta('No se encontraron juegos con el filtro seleccionado')
+         dispatch(resetAction(games))
+
+         setTimeout(() => {
+            setAlerta(false)
+         }, 3000);
+          
         } else {
-          setFiltrados(gamesfilter)
+          
           dispatch(filterByGenresAction(gamesfilter)) 
           setCurrentPage(1)
         }
-     
     }
 
 
@@ -124,10 +141,10 @@ const Games = () => {
       }
 
       if(e.target.value === 'db') {
-        if(filtrados.length === 0) {
+        if(filteredGames.length === 0) {
           dispatch(orderByBdAction(gameState,'db'))
         } else {
-          dispatch(orderByBdAction(filtrados,'db'))
+          dispatch(orderByBdAction(filteredGames,'db'))
         }
           }
 
@@ -193,9 +210,11 @@ const Games = () => {
                               <button className={styles.buttonReset} onClick={handleReset}>RESET</button>
                               </div>
               </div>
-              {alerta && <Alerta danger={true} message='No existe el juego con los filtros seleccionados' />}
+              {alerta  || alertaReducer ? <Alerta danger={true} message='No existe el juego con los filtros seleccionados, reset para continuar' /> : null}
 
                       {games.length === 0  ? ( <Spinner /> ) : (<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}  games={ filteredGames.length === 0 ? games : filteredGames} />) }
+
+                        
 
           
         </div>

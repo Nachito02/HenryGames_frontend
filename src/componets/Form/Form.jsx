@@ -37,7 +37,7 @@ const Form = () => {
    
     e.preventDefault()
     
-    if([inputs.name, inputs.released,inputs.rating,inputs.platforms,inputs.background_image,inputs.description].includes("") || inputs.platforms.length === 0 ) {
+    if([inputs.name, inputs.released,inputs.rating,inputs.platforms,inputs.background_image,inputs.description,inputs.genres].includes("") || inputs.platforms.length === 0 || inputs.genres.length === 0 ) {
       dispatch(setAlerta(true, 'Hubo un error al crear el juego'))
 
 
